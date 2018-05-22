@@ -98,7 +98,7 @@ public class Mesh2D implements Drawable {
             }
         }
         if (flag) {
-            zBuffer.addMesh2D(this);
+            ZBuffer.addMesh2D(this);
         }
     }
 

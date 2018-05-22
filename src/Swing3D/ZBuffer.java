@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 /**
  * Created by ehsan_PC on 7/13/2016.
  */
-public class zBuffer {
+public class ZBuffer {
     private static boolean ENABLE_Z_BUFFER = true;
     private static List<Mesh2D> renderingList = new ArrayList<>();
     private static Comparator<Mesh2D> mesh2DComparator = (o1, o2) -> {

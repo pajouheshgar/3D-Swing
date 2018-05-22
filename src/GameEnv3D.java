@@ -10,7 +10,6 @@ import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 
 public class GameEnv3D extends JPanel {
     private static int row = 15;
@@ -23,7 +22,7 @@ public class GameEnv3D extends JPanel {
     private static Vector3 currentDirection = new Vector3(0, 1, 0);
     private static Vector3 neckDirection = new Vector3(0, 1, 0);
     private static Camera camera;
-    private static boolean firstPerson = false;
+    private static boolean firstPerson = true;
     private static float neckAngel = -0.45f;
     private static BufferedImage skyRight;
     private static BufferedImage skyLeft;
@@ -44,7 +43,7 @@ public class GameEnv3D extends JPanel {
 
     public GameEnv3D() {
         initializeSkyBoxImage();
-        frame = new JFrame("Map");
+        frame = new JFrame("3D Game Environment");
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setSize(600, 600);
         Ehsan = new AnimatedCharacter3D(Character3DFactory.createHuman(0.5f)) {
@@ -132,12 +131,21 @@ public class GameEnv3D extends JPanel {
                 Color.WHITE
         );
         Projection.setPointLight(pointLight);
-        camera = new Camera(
-                new Vector3(6f, -6f, 8f),
-                new Vector3(0.1f, 1, 0),
-                new Vector3(8, 8, 0),
-                1.55f
-        );
+        if(!firstPerson) {
+            camera = new Camera(
+                    new Vector3(6f, -6f, 8f),
+                    new Vector3(0.1f, 1, 0),
+                    new Vector3(8, 8, 0),
+                    1.55f
+            );
+        } else {
+            camera = new Camera(
+                    new Vector3(6f, -6f, 8f),
+                    new Vector3(0f, 1, 0),
+                    new Vector3(8, 8, 0),
+                    1.55f
+            );
+        }
         if (firstPerson) {
             camera.moveTo(Ehsan.getCharacter3D().getCenter().plus(new Vector3(0, 0, 2)));
             camera.lookAt(camera.getPosition().plus(currentDirection.plus(new Vector3(0, 0, -0.25f))));
@@ -500,7 +508,7 @@ public class GameEnv3D extends JPanel {
         }
 
         Ehsan.render(g2d);
-        zBuffer.renderAll(g2d);
+        ZBuffer.renderAll(g2d);
     }
 
 }
